@@ -1,6 +1,0 @@
-framework module Pods_integratr {
-  umbrella header "Pods-integratr-umbrella.h"
-
-  export *
-  module * { export * }
-}

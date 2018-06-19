@@ -1,7 +1,11 @@
+platform :ios, "8.0"
 
-platform :ios, '9.0'
-target :'integratr' do
-    use_frameworks!
-    pod 'AWSMobileClient', '~> 2.6.13'
-    # other pods
+use_frameworks!
+inhibit_all_warnings!
+
+target "SwiftScraper" do
+  pod 'Observable-Swift', '~> 0.7'
+  target "SwiftScraperTests" do
+    inherit! :search_paths
+  end
 end
