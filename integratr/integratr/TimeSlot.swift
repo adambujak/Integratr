@@ -1,5 +1,5 @@
 import Foundation
-enum Days{
+enum Days {
     case Monday;
     case Tuesday;
     case Wednesday;
@@ -8,7 +8,7 @@ enum Days{
     case Saturday;
     case Sunday;
 }
-class Time{
+class Time {
     var hour: Int
     var minute: Int
     init (hour: Int, minute: Int){
@@ -16,7 +16,7 @@ class Time{
         self.minute = minute;
     }
 }
-class TimeSlot{
+class TimeSlot {
     var day: Days
     var time: Time
     init(day: Days, time: Time){

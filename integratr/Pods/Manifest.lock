@@ -1,24 +1,12 @@
 PODS:
-  - AWSAuthCore (2.6.21):
-    - AWSCore (= 2.6.21)
-  - AWSCore (2.6.21)
-  - AWSMobileClient (2.6.21):
-    - AWSAuthCore (= 2.6.21)
+  - Observable-Swift (0.7.0)
 
 DEPENDENCIES:
-  - AWSMobileClient (~> 2.6.13)
-
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - AWSAuthCore
-    - AWSCore
-    - AWSMobileClient
+  - Observable-Swift (~> 0.7)
 
 SPEC CHECKSUMS:
-  AWSAuthCore: f912e4f032092818ee21860a44386c485329a92b
-  AWSCore: a1ff1d32ea7af235fe64be301c204b34cb1f9f83
-  AWSMobileClient: f61ef1ca52cf561a3831f4c29b8bfc43234db8f3
+  Observable-Swift: 8725f501976e49db368a2cd37277d17a9a51a8aa
 
-PODFILE CHECKSUM: a9e3c95e42dda457588b75d65c22ec76bfb7e1fe
+PODFILE CHECKSUM: 0a1b6b4e00ba24a0cb1f9c35f5980cf20e298b5b
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.1.1
