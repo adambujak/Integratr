@@ -16,5 +16,14 @@ class GlobalVariables: UIViewController {
     static func goToMainPage() {
         SignIn().goToMainPage()
     }
+    static var mainQueue = FunctionQueue()
     static var libView = WebView()
+    static func execute(function: @escaping () -> Void) {  // use this to send something to the response queue, if web view isn't loading it executes right away
+        if GlobalVariables.webView.webView.isLoading {
+            GlobalVariables.mainQueue.add(function: function)
+        }
+        else{
+            function()
+        }
+    }
 }

@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 import WebKit
-class SignIn: UIViewController {
+class SignIn: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////// declarations
     
@@ -34,7 +34,14 @@ class SignIn: UIViewController {
             }
             else{
                 signInStatusLabel.text = "Loading..."
-                webView.signIn(macId:  GlobalVariables.MACID, password:  GlobalVariables.PASSWORD)
+                GlobalVariables.execute(function: webView.signIn)
+                GlobalVariables.mainQueue.add(function: {}) // when loading mosaic something weird happens so it stops loading even when it hasn't.
+                GlobalVariables.mainQueue.add(function: webView.checkSignIn)
+                GlobalVariables.mainQueue.add(function: webView.getName)
+                GlobalVariables.mainQueue.add(function: goToMainPage)
+
+                //webView.execute(function: webView.getName)
+                //webView.execute(function: webView.goToCoursePageFromStudentCentre)
             }
         }
     }
@@ -48,6 +55,10 @@ class SignIn: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        GlobalVariables.mainQueue.remove()()
+    }
+    
     
     
 /////////////////////////////////////////////////////////////////////////////////////////////////////// main()
@@ -56,8 +67,11 @@ class SignIn: UIViewController {
         if UserDefaults.standard.object(forKey: "name") == nil {
             let url = URL(string: "https://mosaic.mcmaster.ca")!
             let request = URLRequest(url: url)
+            
             webView.webView.load(request)
-           
+            webView.webView.uiDelegate = self
+            webView.webView.navigationDelegate = self
+            
             webView.webView.frame = CGRect(x: 0, y:500, width:300, height:300)
             view.addSubview(webView.webView)
         }
