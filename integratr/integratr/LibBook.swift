@@ -21,6 +21,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
     var dateDropDown = DropDownButton()
     var numPeopleDropDown = DropDownButton()
     var confirmTimeButton = DropDownButton()
+    var durationDropDown = DropDownButton()
     let webView = GlobalVariables.libView.webView
     var queue = RequestQueue()  // queue to execute web requests in order asynchronously
     var urlString = ""
@@ -175,6 +176,22 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         numPeopleDropDown.setOptions(options: numPeopleArray)
         numPeopleDropDown.setColor(color: UIColor.lightGray)
         numPeopleDropDown.onselect = {
+            self.durationDropDown.isHidden = false
+        }
+        
+        
+        durationDropDown = DropDownButton.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        durationDropDown.translatesAutoresizingMaskIntoConstraints = false
+        durationDropDown.setTitle("Number of People", for: .normal)
+        self.view.insertSubview(durationDropDown, belowSubview: dateDropDown)
+        durationDropDown.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        durationDropDown.centerYAnchor.constraint(equalTo: self.view.topAnchor, constant: 360).isActive = true
+        durationDropDown.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        durationDropDown.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        durationDropDown.isHidden = true
+        durationDropDown.setOptions(options: [".5", "1", "1.5", "2"])
+        durationDropDown.setColor(color: UIColor.lightGray)
+        durationDropDown.onselect = {
             self.execute(function: self.fillOutForm)
         }
         
@@ -195,18 +212,20 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         }
     }
     func enableButtons(){
-        if !webView.isLoading {
-            libraryDropDown.isHidden = false
-            dateDropDown.isHidden = false
-            numPeopleDropDown.isHidden = false
-            timer?.invalidate()
-        }
+      
+        libraryDropDown.isHidden = false
+        dateDropDown.isHidden = false
+        //numPeopleDropDown.isHidden = false
+        //durationDropDown.isHidden = false
+          
+        
     }
     func fillOutForm() {
         let numPeople = self.numPeopleDropDown.title(for: .normal)
         if numPeople != "Number of People" {
             webView.evaluateJavaScript("document.getElementById('name').value='\(UserDefaults.standard.object(forKey: "name")!)'", completionHandler:  nil)
             webView.evaluateJavaScript("document.getElementById('description').value='\(numPeople)'", completionHandler: nil)
+            webView.evaluateJavaScript("document.getElementById('duration').value='\(durationDropDown.title(for: .normal)!)'", completionHandler: nil)
             webView.evaluateJavaScript("document.getElementsByTagName('input')[25].click()", completionHandler: nil)
             self.bookedLabel.text = "Booked!"
         }
@@ -219,6 +238,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         libraryDropDown.isHidden = true
         dateDropDown.isHidden = true
         numPeopleDropDown.isHidden = true
+        durationDropDown.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
