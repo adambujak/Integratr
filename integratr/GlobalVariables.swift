@@ -7,9 +7,14 @@
 //
 
 import Foundation
-
-class GlobalVariables{
-    
-    static var name = "fdsa"
-    static var webView = WebView().webView
+import UIKit
+class GlobalVariables: UIViewController {
+    static var MACID = ""
+    static var PASSWORD = ""
+    static var signInStatusLabel: UILabel = UILabel()
+    static var webView = WebView()
+    static func goToMainPage() {
+        SignIn().goToMainPage()
+    }
+    static var libView = WebView()
 }

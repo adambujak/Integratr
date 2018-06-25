@@ -18,11 +18,11 @@ class MainPage: UIViewController {
         UserDefaults.standard.removeObject(forKey: "name")
     }
     override func viewDidLoad() {
+        print("3")
         super.viewDidLoad()
-        print(GlobalVariables.name)
         welcomeLabel.text! += ", \(UserDefaults.standard.object(forKey: "name")!)!"
-        GlobalVariables.webView.frame = CGRect(x: 0, y:500, width:300, height:300)
-        view.addSubview(GlobalVariables.webView)
+        GlobalVariables.webView.webView.frame = CGRect(x: 0, y:500, width:300, height:300)
+        view.addSubview(GlobalVariables.webView.webView)
         
     }
 
