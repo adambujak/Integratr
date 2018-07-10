@@ -46,5 +46,9 @@ class FunctionQueue {
             return function
         }
     }
+    func empty() {
+        head = nil
+        tail = nil
+    }
 }
 

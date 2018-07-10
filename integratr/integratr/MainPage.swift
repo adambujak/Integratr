@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import WebKit
+import EventKit
 
-class MainPage: UIViewController {
+class MainPage: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     @IBOutlet weak var welcomeLabel: UILabel!
     
@@ -18,14 +20,45 @@ class MainPage: UIViewController {
         UserDefaults.standard.removeObject(forKey: "name")
     }
     override func viewDidLoad() {
-        print("3")
+        
+        let store = EKEventStore()
+        func createEventinTheCalendar(with title:String, forDate eventStartDate:Date, toDate eventEndDate:Date) {
+            
+            store.requestAccess(to: .event) { (success, error) in
+                if  error == nil {
+                    let event = EKEvent.init(eventStore: store)
+                    event.title = title
+                    event.calendar = store.defaultCalendarForNewEvents // this will return deafult calendar from device calendars
+                    event.startDate = eventStartDate
+                    event.endDate = eventEndDate
+                    
+                    let alarm = EKAlarm.init(absoluteDate: Date.init(timeInterval: -3600, since: event.startDate))
+                    event.addAlarm(alarm)
+                    
+                    do {
+                        try store.save(event, span: .thisEvent)
+                        //event created successfullt to default calendar
+                    } catch let error as NSError {
+                        print("failed to save event with error : \(error)")
+                    }
+                    
+                } else {
+                    //we have error in getting access to device calnedar
+                    print("error = \(String(describing: error?.localizedDescription))")
+                }
+            }
+        }
+        
+        createEventinTheCalendar(with: "d", forDate: Date(), toDate: Date())
+    
         super.viewDidLoad()
         welcomeLabel.text! += ", \(UserDefaults.standard.object(forKey: "name")!)!"
         GlobalVariables.webView.webView.frame = CGRect(x: 0, y:500, width:300, height:300)
         view.addSubview(GlobalVariables.webView.webView)
         
     }
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

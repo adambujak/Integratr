@@ -11,7 +11,7 @@ import WebKit
 class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     var webView = WKWebView()
-
+    var timer: Timer = Timer()
     
     
     /*init() {
@@ -35,12 +35,16 @@ class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
         webView.evaluateJavaScript("document.getElementById('userid').value='\(GlobalVariables.MACID)'", completionHandler:  nil)
         webView.evaluateJavaScript("document.getElementById('pwd').value='\(GlobalVariables.PASSWORD)'", completionHandler: nil)
         webView.evaluateJavaScript("document.getElementById('login').submit()", completionHandler: nil)
+        timer = Timer(timeInterval: 0.1, target: self, selector: #selector(checkSignIn), userInfo: nil, repeats: true)
             
     }
         
 
-    func checkSignIn() {
-    
+    @objc func checkSignIn() {
+        if webView.isLoading {
+            return
+        }
+        timer.invalidate()
         webView.evaluateJavaScript("document.getElementById('login_error').innerHTML;", completionHandler:
             { (html: Any?, error: Error?) in
                 if html == nil{
@@ -50,6 +54,7 @@ class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
                 }
                 else if html as! String != " "{
                     GlobalVariables.signInStatusLabel.text = "Incorrect username or password!"
+                    GlobalVariables.mainQueue.empty()
                 }
                 else {
                     UserDefaults.standard.set(GlobalVariables.MACID, forKey: "id")
@@ -61,11 +66,9 @@ class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
     }
     
     func goToStudentCenter() {
-        
-        webView.evaluateJavaScript("document.getElementById('win0divPTNUI_LAND_REC_GROUPLET$5').click();", completionHandler:  nil)
-        
+        webView.evaluateJavaScript("document.getElementById('win0divPTNUI_LAND_REC_GROUPLET$4').click();", completionHandler: nil)
     }
-    
+
     @objc func getName() {
         var name = ""
         let queue = DispatchQueue(label: "queue")
@@ -83,9 +86,10 @@ class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
                     }
                     UserDefaults.standard.set(name, forKey: "name")
                     GlobalVariables.mainQueue.remove()() // this is to go to the next page
+                    
+                    
             })
         }
-            
     }
     
     func goToCoursePageFromStudentCentre() {
@@ -105,9 +109,18 @@ class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
         webView.evaluateJavaScript("innerDoc.getElementById('MTG_SCHED$1').innerHTML", completionHandler:
             { (html: Any?, error: Error?) in
                
-                var df:String = html as! String
-                print(df)
+                
         })
     }
     
 }
+/*
+ GlobalVariables.webView.webView.evaluateJavaScript("var iframe = document.getElementById('ptifrmtgtframe');", completionHandler: nil)
+ GlobalVariables.webView.webView.evaluateJavaScript("var innerDoc = iframe.contentDocument || iframe.contentWindow.document;", completionHandler: nil)
+ GlobalVariables.webView.webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCL_SSS_MORE_ACADEMICS').value = '1002';", completionHandler: nil)
+ GlobalVariables.webView.webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCL_SSS_MORE_ACADEMICS').onchange();", completionHandler: nil)
+ GlobalVariables.webView.webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCL_SSS_GO_1').click();", completionHandler:  nil)
+ GlobalVariables.webView.webView.evaluateJavaScript("innerDoc.getElementById('win0divSSR_DUMMY_RECV1$sels$1$$0').click();", completionHandler:  nil)
+ GlobalVariables.webView.webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCT_SSR_PB_GO').click();", completionHandler:  nil)
+ 
+ A*/

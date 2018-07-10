@@ -28,6 +28,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
     @IBOutlet weak var bookedLabel: UILabel!
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!){
+        print("loaded")
         queue.remove()()
     }
     func loadURL(urlString: String) {
@@ -181,7 +182,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         
         durationDropDown = DropDownButton.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         durationDropDown.translatesAutoresizingMaskIntoConstraints = false
-        durationDropDown.setTitle("Number of People", for: .normal)
+        durationDropDown.setTitle("Duration in Hours", for: .normal)
         self.view.insertSubview(durationDropDown, belowSubview: dateDropDown)
         durationDropDown.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         durationDropDown.centerYAnchor.constraint(equalTo: self.view.topAnchor, constant: 360).isActive = true

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		191365D120DCBDCE002BA25E /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191365D020DCBDCE002BA25E /* DropDownButton.swift */; };
 		1931DC4B20D8C6E00041A751 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931DC4A20D8C6E00041A751 /* GlobalVariables.swift */; };
+		193551AF20F19E2200B328F3 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 193551AE20F19E2200B328F3 /* EventKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		193551EB20F1F03300B328F3 /* TODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193551EA20F1F03300B328F3 /* TODO.swift */; };
 		194BAE3720C9E1B90066F044 /* GetClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194BAE3620C9E1B90066F044 /* GetClasses.swift */; };
 		194BAE3920C9E2CF0066F044 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194BAE3820C9E2CF0066F044 /* WebView.swift */; };
 		194EFF2320B26F6E00B3582E /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194EFF2220B26F6E00B3582E /* Class.swift */; };
@@ -46,6 +48,8 @@
 /* Begin PBXFileReference section */
 		191365D020DCBDCE002BA25E /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		1931DC4A20D8C6E00041A751 /* GlobalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GlobalVariables.swift; path = ../GlobalVariables.swift; sourceTree = "<group>"; };
+		193551AE20F19E2200B328F3 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		193551EA20F1F03300B328F3 /* TODO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODO.swift; sourceTree = "<group>"; };
 		194BAE3620C9E1B90066F044 /* GetClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetClasses.swift; sourceTree = "<group>"; };
 		194BAE3820C9E2CF0066F044 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		194EFF2220B26F6E00B3582E /* Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
@@ -74,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				193551AF20F19E2200B328F3 /* EventKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +99,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		193551AD20F19E2200B328F3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				193551AE20F19E2200B328F3 /* EventKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		19928612206F5E69000A72A8 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +114,7 @@
 				19928632206F5E6A000A72A8 /* integratrTests */,
 				1992863D206F5E6A000A72A8 /* integratrUITests */,
 				1992861C206F5E6A000A72A8 /* Products */,
+				193551AD20F19E2200B328F3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -117,22 +131,23 @@
 		1992861D206F5E6A000A72A8 /* integratr */ = {
 			isa = PBXGroup;
 			children = (
-				198A74C820E0AED8009B4A7F /* FunctionQueue.swift */,
 				1931DC4A20D8C6E00041A751 /* GlobalVariables.swift */,
-				194BAE3820C9E2CF0066F044 /* WebView.swift */,
 				19928620206F5E6A000A72A8 /* SignIn.swift */,
 				1991DF7D20C315CA0082AC86 /* MainPage.swift */,
 				194BAE3620C9E1B90066F044 /* GetClasses.swift */,
 				19988FB520B9F1D2007949F1 /* LibBook.swift */,
-				191365D020DCBDCE002BA25E /* DropDownButton.swift */,
 				1992861E206F5E6A000A72A8 /* AppDelegate.swift */,
+				194BAE3820C9E2CF0066F044 /* WebView.swift */,
+				198A74C820E0AED8009B4A7F /* FunctionQueue.swift */,
+				191365D020DCBDCE002BA25E /* DropDownButton.swift */,
 				194EFF2620B2723F00B3582E /* TimeSlot.swift */,
 				19B6648B20CCA72600C50154 /* User.swift */,
+				194EFF2220B26F6E00B3582E /* Class.swift */,
 				19928622206F5E6A000A72A8 /* Main.storyboard */,
 				19928625206F5E6A000A72A8 /* Assets.xcassets */,
 				19928627206F5E6A000A72A8 /* LaunchScreen.storyboard */,
 				1992862A206F5E6A000A72A8 /* Info.plist */,
-				194EFF2220B26F6E00B3582E /* Class.swift */,
+				193551EA20F1F03300B328F3 /* TODO.swift */,
 			);
 			path = integratr;
 			sourceTree = "<group>";
@@ -293,6 +308,7 @@
 				194BAE3920C9E2CF0066F044 /* WebView.swift in Sources */,
 				194BAE3720C9E1B90066F044 /* GetClasses.swift in Sources */,
 				191365D120DCBDCE002BA25E /* DropDownButton.swift in Sources */,
+				193551EB20F1F03300B328F3 /* TODO.swift in Sources */,
 				19928621206F5E6A000A72A8 /* SignIn.swift in Sources */,
 				1931DC4B20D8C6E00041A751 /* GlobalVariables.swift in Sources */,
 				194EFF2720B2723F00B3582E /* TimeSlot.swift in Sources */,

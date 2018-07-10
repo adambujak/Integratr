@@ -39,6 +39,7 @@ class SignIn: UIViewController, WKNavigationDelegate, WKUIDelegate {
                 GlobalVariables.mainQueue.add(function: webView.checkSignIn)
                 GlobalVariables.mainQueue.add(function: webView.getName)
                 GlobalVariables.mainQueue.add(function: goToMainPage)
+                
 
                 //webView.execute(function: webView.getName)
                 //webView.execute(function: webView.goToCoursePageFromStudentCentre)
@@ -57,6 +58,17 @@ class SignIn: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         GlobalVariables.mainQueue.remove()()
+        if !webView.isLoading {
+            timer = Timer(timeInterval: 0.5, target: self, selector: #selector(notLoading), userInfo: nil, repeats: false)
+        }
+    }
+    @objc func notLoading() {
+        if !webView.webView.isLoading {
+            GlobalVariables.mainQueue.remove()()
+            if !webView.webView.isLoading {
+                notLoading()
+            }
+        }
     }
     
     
@@ -64,24 +76,35 @@ class SignIn: UIViewController, WKNavigationDelegate, WKUIDelegate {
 /////////////////////////////////////////////////////////////////////////////////////////////////////// main()
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UserDefaults.standard.object(forKey: "name") == nil {
-            let url = URL(string: "https://mosaic.mcmaster.ca")!
-            let request = URLRequest(url: url)
+        let url = URL(string: "https://mosaic.mcmaster.ca")!
+        let request = URLRequest(url: url)
+        GlobalVariables.signInStatusLabel = signInStatusLabel
+        webView.webView.load(request)
+        webView.webView.uiDelegate = self
+        webView.webView.navigationDelegate = self
+        
+        webView.webView.frame = CGRect(x: 0, y:500, width:300, height:300)
+        view.addSubview(webView.webView)
+        /*if UserDefaults.standard.object(forKey: "name") != nil {
+            macid.isHidden = true
+            password.isHidden = true
+            signInStatusLabel.text = "Loading..."
+            print("a")
+            timer = Timer(timeInterval: 0.5, target: self, selector: #selector(start), userInfo: nil, repeats: true)
+            print("b")
             
-            webView.webView.load(request)
-            webView.webView.uiDelegate = self
-            webView.webView.navigationDelegate = self
-            
-            webView.webView.frame = CGRect(x: 0, y:500, width:300, height:300)
-            view.addSubview(webView.webView)
         }
+    }
+    @objc func start() {
+        timer?.invalidate()
+        print("as")
+        GlobalVariables.execute(function: webView.signIn)
+        GlobalVariables.mainQueue.add(function: {}) // when loading mosaic something weird happens so it stops loading even when it hasn't.
+        GlobalVariables.mainQueue.add(function: webView.checkSignIn)
+        GlobalVariables.mainQueue.add(function: webView.getName)
+    }*/
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if UserDefaults.standard.object(forKey: "name") != nil {
-            goToMainPage()
-        }
-    }
 
 }
 

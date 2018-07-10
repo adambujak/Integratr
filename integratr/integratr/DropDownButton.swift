@@ -170,6 +170,4 @@ class DropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
         
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    
 }
