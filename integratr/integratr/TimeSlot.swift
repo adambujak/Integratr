@@ -78,4 +78,12 @@ class TimeSlot {
         self.location = location
         self.type = type
     }
+    func getTimeString() -> String {
+        if time.minute == 0 {
+            return "\(time.hour):00"
+        }
+        else {
+            return "\(time.hour):30"
+        }
+    }
 }

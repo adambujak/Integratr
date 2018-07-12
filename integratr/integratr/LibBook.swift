@@ -57,7 +57,11 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         webView.uiDelegate = self
         webView.navigationDelegate = self
         webView.frame = CGRect(x: 0, y:300, width: self.view.frame.size.width, height:200)
-        
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+            statusBar.backgroundColor = UIColor(red:0.51, green:0.00, blue:0.17, alpha:1.0)
+        }
+        UIApplication.shared.statusBarStyle = .lightContent
         self.view.addSubview(self.webView)
         webView.isHidden = true
         loadLoginPage()
@@ -84,7 +88,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         libraryDropDown.widthAnchor.constraint(equalToConstant: 300).isActive = true
         libraryDropDown.heightAnchor.constraint(equalToConstant: 40).isActive = true
         libraryDropDown.setOptions(options: libraries)
-        libraryDropDown.setColor(color: UIColor.lightGray)
+        libraryDropDown.setColor(color: UIColor(red:0.51, green:0.00, blue:0.17, alpha:1.0))
         libraryDropDown.onselect = {
             let library = self.libraryDropDown.title(for: .normal)!
             self.urlString = "https://library.mcmaster.ca/mrbs/"
@@ -114,7 +118,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         confirmTimeButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
         confirmTimeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         confirmTimeButton.isHidden = true
-        confirmTimeButton.setColor(color: UIColor.lightGray)
+        confirmTimeButton.setColor(color: UIColor(red:0.51, green:0.00, blue:0.17, alpha:1.0))
         confirmTimeButton.onclick = {
             print("clicked")
             self.confirmTimeButton.dismissDropDown();
@@ -135,7 +139,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         dateDropDown.heightAnchor.constraint(equalToConstant: 40).isActive = true
         dateDropDown.setOptions(options: stringDates)
         dateDropDown.isHidden = true
-        dateDropDown.setColor(color: UIColor.lightGray)
+        dateDropDown.setColor(color: UIColor(red:0.51, green:0.00, blue:0.17, alpha:1.0))
         
         dateDropDown.onselect = {
             today = self.shortDates[self.dateDropDown.selectedItem]
@@ -160,6 +164,11 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
             self.webView.isHidden = false
             self.confirmTimeButton.isHidden = false
         }
+        dateDropDown.onclick = {
+            self.numPeopleDropDown.isHidden = true
+            self.durationDropDown.isHidden = true
+            
+        }
    
         
     
@@ -174,7 +183,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         numPeopleDropDown.isHidden = true
         numPeopleArray = makeNumPeopleArray()
         numPeopleDropDown.setOptions(options: numPeopleArray)
-        numPeopleDropDown.setColor(color: UIColor.lightGray)
+        numPeopleDropDown.setColor(color: UIColor(red:0.51, green:0.00, blue:0.17, alpha:1.0))
         numPeopleDropDown.onselect = {
             self.durationDropDown.isHidden = false
         }
@@ -190,7 +199,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
         durationDropDown.heightAnchor.constraint(equalToConstant: 40).isActive = true
         durationDropDown.isHidden = true
         durationDropDown.setOptions(options: [".5", "1", "1.5", "2"])
-        durationDropDown.setColor(color: UIColor.lightGray)
+        durationDropDown.setColor(color: UIColor(red:0.51, green:0.00, blue:0.17, alpha:1.0))
         durationDropDown.onselect = {
             self.execute(function: self.fillOutForm)
         }
@@ -200,7 +209,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     }
     func signIn() {
-        webView.evaluateJavaScript("document.getElementById('username').value='\(UserDefaults.standard.object(forKey: "id")!)'", completionHandler:  nil)
+        webView.evaluateJavaScript("document.getElementById('username').value='\(UserDefaults.standard.object(forKey: "macid")!)'", completionHandler:  nil)
         webView.evaluateJavaScript("document.getElementById('password').value='\(UserDefaults.standard.object(forKey: "password")!)'", completionHandler: nil)
         webView.evaluateJavaScript("document.getElementsByTagName('input')[17].click()", completionHandler: nil)
         self.queue.add {
@@ -212,7 +221,7 @@ class LibBook: UIViewController, WKNavigationDelegate, WKUIDelegate {
     func enableButtons(){
       
         libraryDropDown.isHidden = false
-        dateDropDown.isHidden = false
+        //dateDropDown.isHidden = false
         //numPeopleDropDown.isHidden = false
         //durationDropDown.isHidden = false
           

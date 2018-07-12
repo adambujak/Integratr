@@ -13,14 +13,12 @@ import EventKit
 class MainPage: UIViewController, WKNavigationDelegate, WKUIDelegate {
 
     @IBOutlet weak var welcomeLabel: UILabel!
-    
-    @IBAction func clearButton(_ sender: Any) {
-        UserDefaults.standard.removeObject(forKey: "id")
-        UserDefaults.standard.removeObject(forKey: "password")
-        UserDefaults.standard.removeObject(forKey: "name")
-    }
     override func viewDidLoad() {
-        
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+            statusBar.backgroundColor = UIColor.white
+        }
+        UIApplication.shared.statusBarStyle = .lightContent
         let store = EKEventStore()
         func createEventinTheCalendar(with title:String, forDate eventStartDate:Date, toDate eventEndDate:Date) {
             
@@ -53,8 +51,7 @@ class MainPage: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
         super.viewDidLoad()
         welcomeLabel.text! += ", \(UserDefaults.standard.object(forKey: "name")!)!"
-        GlobalVariables.webView.webView.frame = CGRect(x: 0, y:500, width:300, height:300)
-        view.addSubview(GlobalVariables.webView.webView)
+      
         
     }
     
@@ -64,15 +61,4 @@ class MainPage: UIViewController, WKNavigationDelegate, WKUIDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -130,11 +130,9 @@ class DropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
         
         tableView.backgroundColor = color
         self.backgroundColor = color
-        
     
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(tableView)
@@ -161,6 +159,7 @@ class DropDownView: UIView, UITableViewDelegate, UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = dropDownOptions[indexPath.row]
+        cell.textLabel?.textColor = UIColor.white
         cell.backgroundColor = color
         return cell
     }

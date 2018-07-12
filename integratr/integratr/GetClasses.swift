@@ -9,23 +9,109 @@
 
 import UIKit
 
-class GetClasses: UIViewController {
-    @IBAction func button1(_ sender: Any) {
-        scrape()
+class GetClasses: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return classNames.count
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! classCell
+        cell.className.text = classNames[indexPath.row]
+        cell.time.text = times[indexPath.row]
+        cell.duration.text = durations[indexPath.row]
+        cell.location.text = locations[indexPath.row]
+        return cell
+    }
+    
+    var classNames : [String] = []
+    var times : [String] = []
+    var locations : [String] = []
+    var durations : [String] = []
+
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var sundayButton: UIBarButtonItem!
+    @IBOutlet weak var mondayButton: UIBarButtonItem!
+    @IBOutlet weak var tuesdayButton: UIBarButtonItem!
+    @IBOutlet weak var wednesdayButton: UIBarButtonItem!
+    @IBOutlet weak var thursdayButton: UIBarButtonItem!
+    @IBOutlet weak var fridayButton: UIBarButtonItem!
+    @IBOutlet weak var saturdayButton: UIBarButtonItem!
+    @IBAction func sundayTouch(_ sender: Any) {
+        makeAllButtonsWhiteExcept(button: sundayButton)
+    }
+    @IBAction func mondayTouch(_ sender: Any) {
+        makeAllButtonsWhiteExcept(button: mondayButton)
+    }
+    @IBAction func tuesdayTouch(_ sender: Any) {
+        makeAllButtonsWhiteExcept(button: tuesdayButton)
+    }
+    @IBAction func wednesdayTouch(_ sender: Any) {
+        makeAllButtonsWhiteExcept(button: wednesdayButton)
+    }
+    @IBAction func thursdayTouch(_ sender: Any) {
+        makeAllButtonsWhiteExcept(button: thursdayButton)
+    }
+    @IBAction func fridayTouch(_ sender: Any) {
+        makeAllButtonsWhiteExcept(button: fridayButton)
+    }
+    @IBAction func saturdayTouch(_ sender: Any) {
+        makeAllButtonsWhiteExcept(button: saturdayButton)
+    }
+    
+    
+    
     var termInfo: TermInfo = TermInfo(termName: "Fall 2018") // setting manually for now, change this later
     var termDropDown = DropDownButton()
     var classes : [Class] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(GlobalVariables.webView.webView)
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        if statusBar.responds(to:#selector(setter: UIView.backgroundColor)) {
+            statusBar.backgroundColor = UIColor(red:0.51, green:0.00, blue:0.17, alpha:1.0)
+        }
+        UIApplication.shared.statusBarStyle = .lightContent
         scrape()
-
+        tableView.rowHeight = 85
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         //var name = "ENGINEER 2MM3-C01<br>LEC (12015)"
         //var times = "TuWe 09:30 - 10:20<br>CNH 103"
        // makeClass(name: name, times: times)
         
     }
+    func makeAllButtonsWhiteExcept(button: UIBarButtonItem) { ///rename - errr and inapropriate
+        sundayButton.tintColor = UIColor.white
+        mondayButton.tintColor = UIColor.white
+        tuesdayButton.tintColor = UIColor.white
+        wednesdayButton.tintColor = UIColor.white
+        thursdayButton.tintColor = UIColor.white
+        fridayButton.tintColor = UIColor.white
+        saturdayButton.tintColor = UIColor.white
+        button.tintColor = UIColor(red:1.00, green:0.75, blue:0.34, alpha:1.0)
+        emptyArraysForTable()
+        fillArraysForTable(day: returnDayFromString(str: button.title!))
+    }
+    func emptyArraysForTable() {
+        classNames = []
+        times = []
+        locations = []
+        durations = []
+    }
+    func fillArraysForTable(day: Days) {
+        for i in classes {
+            for j in i.timeSlots{
+                if j.day == day {
+                    let bufferName = i.name + " - " + "\(j.type)"
+                    classNames.append(bufferName)
+                    times.append(j.getTimeString())
+                    locations.append(j.location)
+                    durations.append("1h")
+                }
+            }
+        }
+        tableView.reloadData() //move this to the make all buttons
+    }
+    
+    
     func findNextDay(timeSlot: TimeSlot) -> Date {
         var date = Date()
         while timeSlot.day.rawValue != Calendar.current.dateComponents([.weekday], from: date).weekday! { // adds days to current day until it reaches the day of the week we want

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		190AD49B20F6E56C003626CD /* classCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190AD49A20F6E56C003626CD /* classCell.swift */; };
 		191365D120DCBDCE002BA25E /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191365D020DCBDCE002BA25E /* DropDownButton.swift */; };
 		1931DC4B20D8C6E00041A751 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931DC4A20D8C6E00041A751 /* GlobalVariables.swift */; };
 		193551AF20F19E2200B328F3 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 193551AE20F19E2200B328F3 /* EventKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -26,6 +27,7 @@
 		1992863F206F5E6A000A72A8 /* integratrUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1992863E206F5E6A000A72A8 /* integratrUITests.swift */; };
 		19988FB620B9F1D2007949F1 /* LibBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19988FB520B9F1D2007949F1 /* LibBook.swift */; };
 		19B6648C20CCA72600C50154 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B6648B20CCA72600C50154 /* User.swift */; };
+		19D86ED320F58BAE00C9071F /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D86ED220F58BAE00C9071F /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		190AD49A20F6E56C003626CD /* classCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classCell.swift; sourceTree = "<group>"; };
 		191365D020DCBDCE002BA25E /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
 		1931DC4A20D8C6E00041A751 /* GlobalVariables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GlobalVariables.swift; path = ../GlobalVariables.swift; sourceTree = "<group>"; };
 		193551AE20F19E2200B328F3 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -71,6 +74,7 @@
 		19928640206F5E6A000A72A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		19988FB520B9F1D2007949F1 /* LibBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibBook.swift; sourceTree = "<group>"; };
 		19B6648B20CCA72600C50154 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		19D86ED220F58BAE00C9071F /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,10 +140,12 @@
 				1991DF7D20C315CA0082AC86 /* MainPage.swift */,
 				194BAE3620C9E1B90066F044 /* GetClasses.swift */,
 				19988FB520B9F1D2007949F1 /* LibBook.swift */,
+				19D86ED220F58BAE00C9071F /* Settings.swift */,
 				1992861E206F5E6A000A72A8 /* AppDelegate.swift */,
 				194BAE3820C9E2CF0066F044 /* WebView.swift */,
 				198A74C820E0AED8009B4A7F /* FunctionQueue.swift */,
 				191365D020DCBDCE002BA25E /* DropDownButton.swift */,
+				190AD49A20F6E56C003626CD /* classCell.swift */,
 				194EFF2620B2723F00B3582E /* TimeSlot.swift */,
 				19B6648B20CCA72600C50154 /* User.swift */,
 				194EFF2220B26F6E00B3582E /* Class.swift */,
@@ -308,6 +314,7 @@
 				194BAE3920C9E2CF0066F044 /* WebView.swift in Sources */,
 				194BAE3720C9E1B90066F044 /* GetClasses.swift in Sources */,
 				191365D120DCBDCE002BA25E /* DropDownButton.swift in Sources */,
+				19D86ED320F58BAE00C9071F /* Settings.swift in Sources */,
 				193551EB20F1F03300B328F3 /* TODO.swift in Sources */,
 				19928621206F5E6A000A72A8 /* SignIn.swift in Sources */,
 				1931DC4B20D8C6E00041A751 /* GlobalVariables.swift in Sources */,
@@ -316,6 +323,7 @@
 				19988FB620B9F1D2007949F1 /* LibBook.swift in Sources */,
 				198A74C920E0AED8009B4A7F /* FunctionQueue.swift in Sources */,
 				1992861F206F5E6A000A72A8 /* AppDelegate.swift in Sources */,
+				190AD49B20F6E56C003626CD /* classCell.swift in Sources */,
 				1991DF7E20C315CA0082AC86 /* MainPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

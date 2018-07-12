@@ -14,6 +14,9 @@ class GlobalVariables: UIViewController {
     static var signInStatusLabel: UILabel = UILabel()
     static var webView = WebView()
     static var mainQueue = FunctionQueue()
+    static var macidField: UITextField!
+    static var passwordField: UITextField!
+    static var signInButton: UIButton!
     static var libView = WebView()
     static func execute(function: @escaping () -> Void) {  // use this to send something to the response queue, if web view isn't loading it executes right away
         print(GlobalVariables.webView.webView.isLoading)

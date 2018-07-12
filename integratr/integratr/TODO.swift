@@ -1,20 +1,20 @@
 /* TODO:
  *
- * sign in incorrect notify
  *
- * go straight to main page if already signed in
  *
- * make table view this week's schedule in get classes
+ *
+ *
+ * 
  *
  * multiple lab entry 
  *
+ * end class
  *
+ *sort classes by time
  *
+ *make sure school breaks are working
  *
- *
- *
- *
- *
+ *add calendar writing
  *
  *
  *

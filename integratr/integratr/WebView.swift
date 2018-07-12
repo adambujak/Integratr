@@ -11,7 +11,8 @@ import WebKit
 class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
     
     var webView = WKWebView()
-    var timer: Timer = Timer()
+    var timer: Timer? = nil
+
     
     
     /*init() {
@@ -30,49 +31,55 @@ class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
     // delegate on load will call functions in queue in order
     
     
-    func signIn() {
-        
-        webView.evaluateJavaScript("document.getElementById('userid').value='\(GlobalVariables.MACID)'", completionHandler:  nil)
-        webView.evaluateJavaScript("document.getElementById('pwd').value='\(GlobalVariables.PASSWORD)'", completionHandler: nil)
-        webView.evaluateJavaScript("document.getElementById('login').submit()", completionHandler: nil)
-        timer = Timer(timeInterval: 0.1, target: self, selector: #selector(checkSignIn), userInfo: nil, repeats: true)
-            
-    }
-        
-
-    @objc func checkSignIn() {
-        if webView.isLoading {
-            return
+    @objc func signIn(macId: String, password: String) {
+        if !webView.isLoading {
+            print(macId)
+            print(password)
+            webView.evaluateJavaScript("document.getElementById('userid').value='\(macId)'", completionHandler:  nil)
+            webView.evaluateJavaScript("document.getElementById('pwd').value='\(password)'", completionHandler: nil)
+            webView.evaluateJavaScript("document.getElementById('login').submit()", completionHandler: nil)
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(checkSignIn), userInfo: nil, repeats:true)
         }
-        timer.invalidate()
-        webView.evaluateJavaScript("document.getElementById('login_error').innerHTML;", completionHandler:
-            { (html: Any?, error: Error?) in
-                if html == nil{
-                    UserDefaults.standard.set(GlobalVariables.MACID, forKey: "id")
-                    UserDefaults.standard.set(GlobalVariables.PASSWORD, forKey: "password")
-                    self.goToStudentCenter()
-                }
-                else if html as! String != " "{
-                    GlobalVariables.signInStatusLabel.text = "Incorrect username or password!"
-                    GlobalVariables.mainQueue.empty()
-                }
-                else {
-                    UserDefaults.standard.set(GlobalVariables.MACID, forKey: "id")
-                    UserDefaults.standard.set(GlobalVariables.PASSWORD, forKey: "password")
-                    self.goToStudentCenter()
-                }
-        })
-    
+        
     }
     
-    func goToStudentCenter() {
-        webView.evaluateJavaScript("document.getElementById('win0divPTNUI_LAND_REC_GROUPLET$4').click();", completionHandler: nil)
+    @objc func checkSignIn() {
+        if !webView.isLoading {
+            timer?.invalidate()
+            webView.evaluateJavaScript("document.getElementById('login_error').innerHTML;", completionHandler:
+                { (html: Any?, error: Error?) in
+                    if html == nil {
+                        UserDefaults.standard.set(GlobalVariables.MACID, forKey: "macid")
+                        UserDefaults.standard.set(GlobalVariables.PASSWORD, forKey: "password")
+                        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.goToStudentCenter), userInfo: nil, repeats: true)
+                    }
+                    else if html as! String != " " {
+                        GlobalVariables.macidField.isHidden = false
+                        GlobalVariables.passwordField.isHidden = false
+                        GlobalVariables.signInButton.isHidden = false
+                        GlobalVariables.signInStatusLabel.text = "Incorrect username or password!"
+                    }
+                    else {
+                        UserDefaults.standard.set(GlobalVariables.MACID, forKey: "macid")
+                        UserDefaults.standard.set(GlobalVariables.PASSWORD, forKey: "password")
+                        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.goToStudentCenter), userInfo: nil, repeats: true)
+                    }
+            })
+        }
     }
 
+    @objc func goToStudentCenter() {
+        if !webView.isLoading {
+            timer?.invalidate()
+            webView.evaluateJavaScript("document.getElementById('win0divPTNUI_LAND_REC_GROUPLET$4').click();", completionHandler:  nil)
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(getName), userInfo: nil, repeats:true)
+        }
+    }
+    
     @objc func getName() {
         var name = ""
-        let queue = DispatchQueue(label: "queue")
-        queue.sync{
+        if !webView.isLoading{
+            timer?.invalidate()
             webView.evaluateJavaScript("var iframe = document.getElementById('ptifrmtgtframe');", completionHandler: nil)
             webView.evaluateJavaScript("var innerDoc = iframe.contentDocument || iframe.contentWindow.document;", completionHandler: nil)
             webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCL_TITLE1$78$').innerHTML;", completionHandler:
@@ -85,32 +92,9 @@ class WebView {//:UIViewController, WKNavigationDelegate, WKUIDelegate {
                         name.append(char)
                     }
                     UserDefaults.standard.set(name, forKey: "name")
-                    GlobalVariables.mainQueue.remove()() // this is to go to the next page
-                    
-                    
+                    GlobalVariables.mainQueue.remove()()
             })
         }
-    }
-    
-    func goToCoursePageFromStudentCentre() {
-        
-        webView.evaluateJavaScript("var iframe = document.getElementById('ptifrmtgtframe');", completionHandler: nil)
-        webView.evaluateJavaScript("var innerDoc = iframe.contentDocument || iframe.contentWindow.document;", completionHandler: nil)
-        webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCL_SSS_MORE_ACADEMICS').value = '1002';", completionHandler: nil)
-        webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCL_SSS_MORE_ACADEMICS').onchange();", completionHandler: nil)
-        webView.evaluateJavaScript("innerDoc.getElementById('DERIVED_SSS_SCL_SSS_GO_1').click();", completionHandler:  nil)
-        
-    }
-    func getCoursesFromCoursePage() {
-        
-        webView.evaluateJavaScript("var iframe = document.getElementById('ptifrmtgtframe');", completionHandler: nil)
-        webView.evaluateJavaScript("var innerDoc = iframe.contentDocument || iframe.contentWindow.document;", completionHandler: nil)
-        
-        webView.evaluateJavaScript("innerDoc.getElementById('MTG_SCHED$1').innerHTML", completionHandler:
-            { (html: Any?, error: Error?) in
-               
-                
-        })
     }
     
 }
